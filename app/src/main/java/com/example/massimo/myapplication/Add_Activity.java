@@ -8,19 +8,19 @@ import android.view.MenuItem;
 import android.view.View;
 
 
-public class MainActivity extends ActionBarActivity {
+public class Add_Activity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_add_);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_add_, menu);
         return true;
     }
 
@@ -39,31 +39,9 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public String[] SearchByArtist(View v)
+    public void CancelAction(View v)
     {
-        String[] test =  new String[0];
-        return test;
-    }
-
-    public String[] SearchByTitle(View v)
-    {
-        String[] test =  new String[0];
-        return test;
-    }
-
-    public boolean Add(View v)
-    {
-        return true;
-    }
-    public void DualSearch(View v)
-    {
-        Intent intent = new Intent(MainActivity.this, DualSearch_Activity.class);
-        startActivity(intent);
-    }
-
-    public void AddAction(View v)
-    {
-        Intent intent = new Intent(MainActivity.this, Add_Activity.class);
+        Intent intent = new Intent(Add_Activity.this, MainActivity.class);
         startActivity(intent);
     }
 }
