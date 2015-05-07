@@ -41,14 +41,13 @@ public class MainActivity extends ActionBarActivity {
 
     public String[] SearchByArtist(View v)
     {
-        String[] test =  new String[0];
-        return test;
+        return null;
     }
 
     public String[] SearchByTitle(View v)
     {
-        String[] test =  new String[0];
-        return test;
+        //String[] test =  new String[0];
+        return null;
     }
 
     public boolean Add(View v)
