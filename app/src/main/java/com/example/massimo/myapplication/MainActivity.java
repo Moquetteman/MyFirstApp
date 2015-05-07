@@ -6,10 +6,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 
 public class MainActivity extends ActionBarActivity {
 
+    public final static String TITLE_STRING = "massimo.TITLE_STRING";
+    public final static String ARTIST_STRING = "massimo.ARTIST_STRING";
+    public final static String SEARCH_TYPE = "massimo.SEARCH_TYPE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,15 +43,30 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public String[] SearchByArtist(View v)
+    public void SearchByArtist(View v)
     {
-        return null;
+        EditText searchText = (EditText)findViewById(R.id.champ_auteur);
+        String text = searchText.getText().toString();
+
+
+        Intent intent = new Intent(MainActivity.this, DualSearch_Activity.class);
+        intent.putExtra(ARTIST_STRING, text);
+        intent.putExtra(SEARCH_TYPE, "artist");
+        startActivity(intent);
+
     }
 
-    public String[] SearchByTitle(View v)
+    public void SearchByTitle(View v)
     {
         //String[] test =  new String[0];
-        return null;
+        EditText searchText = (EditText)findViewById(R.id.champ_titre);
+        String text = searchText.getText().toString();
+
+
+        Intent intent = new Intent(MainActivity.this, DualSearch_Activity.class);
+        intent.putExtra(TITLE_STRING, text);
+        intent.putExtra(SEARCH_TYPE, "title");
+        startActivity(intent);
     }
 
     public boolean Add(View v)
@@ -56,7 +75,16 @@ public class MainActivity extends ActionBarActivity {
     }
     public void DualSearch(View v)
     {
+        EditText searchText1 = (EditText)findViewById(R.id.champ_titre);
+        String text1 = searchText1.getText().toString();
+        EditText searchText2 = (EditText)findViewById(R.id.champ_auteur);
+        String text2 = searchText2.getText().toString();
+
+
         Intent intent = new Intent(MainActivity.this, DualSearch_Activity.class);
+        intent.putExtra(TITLE_STRING, text1);
+        intent.putExtra(ARTIST_STRING, text2);
+        intent.putExtra(SEARCH_TYPE, "dual");
         startActivity(intent);
     }
 

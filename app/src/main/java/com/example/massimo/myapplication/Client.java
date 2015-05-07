@@ -21,15 +21,6 @@ public class Client {
             System.err.println(e.getMessage());
             status = 1;
         }
-        if (ic != null) {
-            try {
-                ic.destroy();
-            } catch (Exception e) {
-                System.err.println(e.getMessage());
-                status = 1;
-            }
-        }
-
     }
 
     public void AddFile(String title, String artist, String file)
@@ -52,4 +43,30 @@ public class Client {
         return titles;
     }
 
+    public void ArtistsList(String artist)
+    {
+        artists = ServeurIceMP3.rechercheAuteur(artist);
+    }
+
+    public String[] getArtists()
+    {
+        return artists;
+    }
+
+    public String dualSearch(String title, String artist)
+    {
+        return ServeurIceMP3.recherche(title,artist);
+    }
+    public void clientClose()
+    {
+        int status;
+        if (ic != null) {
+            try {
+                ic.destroy();
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+                status = 1;
+            }
+        }
+    }
 }

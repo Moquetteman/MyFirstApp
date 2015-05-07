@@ -1,19 +1,41 @@
 package com.example.massimo.myapplication;
 
+import android.app.ListActivity;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SimpleAdapter;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
-public class DualSearch_Activity extends ActionBarActivity {
+public class DualSearch_Activity extends ListActivity {
+
+    private String searchTitle;
+    private String searchArtist;
+    private String searchType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dual_search_);
-    }
 
+        Intent intent = getIntent();
+        searchTitle = intent.getStringExtra(MainActivity.TITLE_STRING);
+        searchArtist = intent.getStringExtra(MainActivity.ARTIST_STRING);
+        searchType = intent.getStringExtra(MainActivity.SEARCH_TYPE);
+        System.out.println(searchTitle);
+        System.out.println(searchArtist);
+        System.out.println(searchType);
+
+        //setContentView(R.layout.activity_dual_search_);
+        new Result().execute(searchTitle, searchArtist,searchType);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -36,4 +58,65 @@ public class DualSearch_Activity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private class Result extends AsyncTask<String, Void, String[]>
+    {
+
+        @Override
+        protected String[] doInBackground(String... params) {
+            Client client = new Client();
+            String[] results = new String[1];
+            if(params[2].equals("dual"))
+            {
+                results[0] = client.dualSearch(params[0],params[1]);
+                if(results[0].equals(""))
+                {
+                    return null;
+                }
+            }
+            else if(params[2].equals("title"))
+            {
+                client.TitlesList(params[0]);
+                results = client.getTitles();
+                if(results.length == 0)
+                    return null;
+            }
+            else if(params[2].equals("artist"))
+            {
+                client.ArtistsList(params[1]);
+                results = client.getArtists();
+                if(results.length == 0)
+                    return null;
+            }
+            return results;
+        }
+
+        @Override
+        protected void onPostExecute(String[] strings) {
+            super.onPostExecute(strings);
+            if (strings == null)
+            {
+                Toast.makeText(DualSearch_Activity.this, "No result", Toast.LENGTH_SHORT)
+                        .show();
+            }
+            else
+            {
+                final String c1="file";
+
+                List<HashMap<String, String>> data = new ArrayList<>();
+
+                for (String s : strings) {
+                    HashMap<String, String> e = new HashMap<>();
+
+                    e.put(c1, s);
+                    data.add(e);
+                }
+
+                SimpleAdapter adapter = new SimpleAdapter(DualSearch_Activity.this, data, android.R.layout.simple_list_item_1, new String[] { c1 }, new int[] { android.R.id.text1 });
+                setListAdapter(adapter);
+            }
+        }
+    }
+
+
 }
