@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class Add_Activity extends ActionBarActivity {
@@ -37,6 +39,33 @@ public class Add_Activity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void AddAction(View v)
+    {
+        EditText champTitre = (EditText)findViewById(R.id.editText);
+        String titre = champTitre.getText().toString();
+        EditText champArtiste = (EditText)findViewById(R.id.editText2);
+        String artiste = champArtiste.getText().toString();
+        EditText champFichier = (EditText)findViewById(R.id.editText3);
+        String fichier = champFichier.getText().toString();
+
+        Client client = new Client();
+        if(client.dualSearch(titre,artiste).equals(""))
+        {
+            client.AddFile(titre,artiste,fichier);
+            if(client.dualSearch(titre,artiste).equals(""))
+                Toast.makeText(Add_Activity.this, "Add fail", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(Add_Activity.this, "Add success", Toast.LENGTH_SHORT).show();
+
+        }
+        else
+        {
+            Toast.makeText(Add_Activity.this, "Already Exist", Toast.LENGTH_SHORT).show();
+        }
+
+        client.clientClose();
     }
 
     public void CancelAction(View v)

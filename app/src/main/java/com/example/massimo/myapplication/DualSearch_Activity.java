@@ -88,6 +88,7 @@ public class DualSearch_Activity extends ListActivity {
                 if(results.length == 0)
                     return null;
             }
+            client.clientClose();
             return results;
         }
 
@@ -96,8 +97,7 @@ public class DualSearch_Activity extends ListActivity {
             super.onPostExecute(strings);
             if (strings == null)
             {
-                Toast.makeText(DualSearch_Activity.this, "No result", Toast.LENGTH_SHORT)
-                        .show();
+                Toast.makeText(DualSearch_Activity.this, "No result", Toast.LENGTH_SHORT).show();
             }
             else
             {

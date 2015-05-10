@@ -20,6 +20,7 @@
         android:text="OK"
         android:id="@+id/ok_button"
         android:layout_alignParentBottom="true"
+        android:onClick="AddAction"
         android:layout_toEndOf="@+id/add" />
 
     <Button
