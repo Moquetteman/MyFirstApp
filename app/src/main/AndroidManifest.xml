@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.massimo.myapplication" >
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -25,6 +25,10 @@
         <activity
             android:name=".DualSearch_Activity"
             android:label="@string/title_activity_dual_search_" >
+        </activity>
+        <activity
+            android:name=".Player_Activity"
+            android:label="@string/title_activity_player_" >
         </activity>
     </application>
 

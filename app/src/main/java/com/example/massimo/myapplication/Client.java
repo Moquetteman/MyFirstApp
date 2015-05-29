@@ -6,6 +6,7 @@ public class Client {
     private serveur.ServeurIceMP3Prx ServeurIceMP3;
     private String[] artists;
     private String[] titles;
+    private String file;
 
     public Client() {
         int status = 0;
@@ -55,8 +56,10 @@ public class Client {
 
     public String dualSearch(String title, String artist)
     {
-        return ServeurIceMP3.recherche(title,artist);
+        file = ServeurIceMP3.recherche(title,artist);
+        return file;
     }
+
     public void clientClose()
     {
         int status;
@@ -68,5 +71,30 @@ public class Client {
                 status = 1;
             }
         }
+    }
+
+    public String getSongByIDArtist(int index)
+    {
+        return artists[index];
+    }
+
+    public String getSongByIDTitle(int index)
+    {
+        return titles[index];
+    }
+
+    public String getFile()
+    {
+        return file;
+    }
+
+    public String PlayMusic(String file)
+    {
+        return ServeurIceMP3.lireMp3ParFichier(file);
+    }
+
+    public void StopMusic(String file)
+    {
+        ServeurIceMP3.stopMp3(file);
     }
 }

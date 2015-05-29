@@ -7,8 +7,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +22,14 @@ public class DualSearch_Activity extends ListActivity {
     private String searchTitle;
     private String searchArtist;
     private String searchType;
+    public final static String SONG = "massimo.SONG";
+    private Client client =  null;
+
+    /*public DualSearch_Activity()
+    {
+        client = new Client();
+    }*/
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +69,26 @@ public class DualSearch_Activity extends ListActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id)
+    {
+        Intent intent = new Intent(this, Player_Activity.class);
+        if(searchType.equals("artist"))
+            intent.putExtra(SONG, client.getSongByIDArtist(position));
+        else if(searchType.equals("title"))
+            intent.putExtra(SONG, client.getSongByIDTitle(position));
+        else if(searchType.equals("dual"))
+            intent.putExtra(SONG,client.getFile());
+
+        startActivity(intent);
+    }
+
     private class Result extends AsyncTask<String, Void, String[]>
     {
 
         @Override
         protected String[] doInBackground(String... params) {
-            Client client = new Client();
+            client = new Client();
             String[] results = new String[1];
             if(params[2].equals("dual"))
             {
@@ -117,6 +141,4 @@ public class DualSearch_Activity extends ListActivity {
             }
         }
     }
-
-
 }
